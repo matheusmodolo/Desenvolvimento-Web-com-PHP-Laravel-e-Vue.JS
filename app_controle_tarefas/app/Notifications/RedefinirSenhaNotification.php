@@ -56,7 +56,7 @@ class RedefinirSenhaNotification extends Notification
             ->action('Redefinir Senha', $url)
             ->line('O link acima expira em ' . $minutos . ' minutos.')
             ->line('Se você não solicitou uma redefinição de senha, nenhuma ação adicional será necessária.')
-            ->salutation('Atenciosamente,');
+            ->salutation('Atenciosamente, ');
         
         // return (new MailMessage)
         //             ->line('The introduction to the notification.')
