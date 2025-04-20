@@ -29,7 +29,7 @@ class TarefaController extends Controller
      */
     public function create()
     {
-        //
+        return view('tarefa.create');
     }
 
     /**
@@ -40,7 +40,23 @@ class TarefaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'tarefa' => 'required|min:3',
+            'data_limite'=>'required|date'
+        ], [
+            'tarefa.required' => 'O campo Tarefa é obrigatório',
+            'tarefa.min' => 'O campo Tarefa deve ter no mínimo 3 caracteres',
+            'data_limite.required' => 'O campo Data Limite é obrigatório',
+            'data_limite.date' => 'O campo Data Limite deve ser uma data válida'
+        ]);
+
+        $tarefa = Tarefa::create($request->all());
+
+        return redirect()->route('tarefa.show', ['tarefa' => $tarefa->id]);
+
+
+        dd($request->all());
     }
 
     /**
@@ -51,7 +67,7 @@ class TarefaController extends Controller
      */
     public function show(Tarefa $tarefa)
     {
-        //
+        dd($tarefa);
     }
 
     /**
