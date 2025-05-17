@@ -1,18 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Tarefa;
 use Illuminate\Http\Request;
-use Mail;
 use App\Mail\NovaTarefaMail;
-use Illuminate\Support\Facades\Auth;
+use Mail;
 
 class TarefaController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +20,8 @@ class TarefaController extends Controller
      */
     public function index()
     {
-        //
+        $tarefas = Tarefa::where('user_id', auth()->user()->id)->orderBy('data_limite', 'desc')->paginate(10);
+        return view('tarefa.index', ['tarefas' => $tarefas]);
     }
 
     /**
@@ -44,7 +44,7 @@ class TarefaController extends Controller
     {
         $request->validate([
             'tarefa' => 'required|min:3',
-            'data_limite'=>'required|date'
+            'data_limite' => 'required|date'
         ], [
             'tarefa.required' => 'O campo Tarefa é obrigatório',
             'tarefa.min' => 'O campo Tarefa deve ter no mínimo 3 caracteres',
