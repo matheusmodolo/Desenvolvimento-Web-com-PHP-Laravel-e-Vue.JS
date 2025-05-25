@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tarefa;
 use Illuminate\Http\Request;
 use App\Mail\NovaTarefaMail;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class TarefaController extends Controller
 {
@@ -81,7 +81,7 @@ class TarefaController extends Controller
      */
     public function edit(Tarefa $tarefa)
     {
-        //
+        return view('tarefa.edit', ['tarefa' => $tarefa]);
     }
 
     /**
@@ -93,7 +93,17 @@ class TarefaController extends Controller
      */
     public function update(Request $request, Tarefa $tarefa)
     {
-        //
+        $request->validate([
+            'tarefa' => 'required|min:3',
+            'data_limite' => 'required|date'
+        ], [
+            'tarefa.required' => 'O campo Tarefa é obrigatório',
+            'tarefa.min' => 'O campo Tarefa deve ter no mínimo 3 caracteres',
+            'data_limite.required' => 'O campo Data Limite é obrigatório',
+            'data_limite.date' => 'O campo Data Limite deve ser uma data válida'
+        ]);
+        $tarefa->update($request->all());
+        return redirect()->route('tarefa.show', ['tarefa' => $tarefa->id]);
     }
 
     /**

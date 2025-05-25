@@ -23,7 +23,7 @@
                                         <td>{{ $tarefa->id }}</td>
                                         <td>{{ $tarefa->tarefa }}</td>
                                         <td>{{ date('d/m/Y', strtotime($tarefa->data_limite)) }} </td>
-                                        <td></td>
+                                        <td><a href="{{ route('tarefa.edit', $tarefa->id) }}">Editar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
