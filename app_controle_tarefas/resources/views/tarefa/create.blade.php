@@ -28,7 +28,10 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            <div class="d-flex justify-content-end align-items-center mt-4">
+                                <a href="{{ url()->previous() }}" class="btn btn-light mr-3">Voltar</a>
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </div>
                         </form>
                     </div>
                 </div>

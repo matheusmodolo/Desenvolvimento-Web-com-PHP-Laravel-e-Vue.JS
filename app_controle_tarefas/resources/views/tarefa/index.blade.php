@@ -5,7 +5,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Tarefas</div>
+                    <div class="card-header d-flex align-items-center justify-content-between">Tarefas <a
+                            href="{{ route('tarefa.create') }}" class="btn btn-sm btn-primary">Adicionar</a></div>
 
                     <div class="card-body">
                         <table class="table">
@@ -26,10 +27,12 @@
                                         <td>{{ date('d/m/Y', strtotime($tarefa->data_limite)) }} </td>
                                         <td><a href="{{ route('tarefa.edit', $tarefa->id) }}">Editar</a></td>
                                         <td>
-                                            <form id="form_{{ $tarefa->id }}" action="{{ route('tarefa.destroy', $tarefa->id) }}" method="POST">
+                                            <form id="form_{{ $tarefa->id }}"
+                                                action="{{ route('tarefa.destroy', $tarefa->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <a href="#" onclick="document.getElementById('form_{{ $tarefa->id }}').submit()">Excluir</a>
+                                                <a href="#"
+                                                    onclick="document.getElementById('form_{{ $tarefa->id }}').submit()">Excluir</a>
                                             </form>
                                         </td>
                                     </tr>
@@ -44,8 +47,9 @@
                                 </li>
 
                                 @for ($i = 1; $i <= $tarefas->lastPage(); $i++)
-                                    {{-- <li class="page-item @if($i == $tarefas->currentPage()) active @endif" aria-label="Page {{ $i }})"> --}}
-                                    <li class="page-item {{ $i == $tarefas->currentPage() ? 'active' : '' }}" aria-label="Page {{ $i }})">
+                                    {{-- <li class="page-item @if ($i == $tarefas->currentPage()) active @endif" aria-label="Page {{ $i }})"> --}}
+                                    <li class="page-item {{ $i == $tarefas->currentPage() ? 'active' : '' }}"
+                                        aria-label="Page {{ $i }})">
                                         <a class="page-link" href="{{ $tarefas->url($i) }}">{{ $i }}</a>
                                     </li>
                                 @endfor
