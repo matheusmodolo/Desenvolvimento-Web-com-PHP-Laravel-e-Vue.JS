@@ -101,7 +101,7 @@ class TarefaController extends Controller
         if ($tarefa->user_id != $user_id) {
             return view('acesso-negado');
         }
-        
+
         $request->validate([
             'tarefa' => 'required|min:3',
             'data_limite' => 'required|date'
@@ -123,6 +123,12 @@ class TarefaController extends Controller
      */
     public function destroy(Tarefa $tarefa)
     {
-        //
+        $user_id = auth()->user()->id;
+        if ($tarefa->user_id != $user_id) {
+            return view('acesso-negado');
+        }
+        $tarefa->delete();
+        
+        return redirect()->route('tarefa.index');
     }
 }
