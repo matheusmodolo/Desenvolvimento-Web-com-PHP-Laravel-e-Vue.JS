@@ -28,6 +28,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])
        ->middleware('verified');
 */
 
+Route::get('tarefa/exportacao', 'App\Http\Controllers\TarefaController@exportacao')->name('tarefa.exportacao');
+
 Route::resource('tarefa', 'App\Http\Controllers\TarefaController')->middleware('verified');
 
 Route::get('mensagem-teste', function () {

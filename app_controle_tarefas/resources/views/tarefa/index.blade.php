@@ -5,8 +5,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header d-flex align-items-center justify-content-between">Tarefas <a
-                            href="{{ route('tarefa.create') }}" class="btn btn-sm btn-primary">Adicionar</a></div>
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        Tarefas
+                        <div>
+                            <a href="{{ route('tarefa.exportacao') }}" class="btn btn-sm btn-secondary">XLSX</a>
+                            <a href="{{ route('tarefa.create') }}" class="btn btn-sm btn-primary">Adicionar</a>
+                        </div>
+                    </div>
 
                     <div class="card-body">
                         <table class="table">
