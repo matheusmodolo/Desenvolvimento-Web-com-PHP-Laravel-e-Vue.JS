@@ -130,26 +130,15 @@ class TarefaController extends Controller
             return view('acesso-negado');
         }
         $tarefa->delete();
-        
+
         return redirect()->route('tarefa.index');
     }
 
-    public function exportacao($extensao){
-        switch ($extensao) {
-            case 'xlsx':
-                $extensao = 'xlsx';
-                break;
-            case 'csv':
-                $extensao = 'csv';
-                break;
-            case 'pdf':
-                $extensao = 'pdf';
-                break;
-            default:
-                redirect()->route('tarefa.index');
-                break;
+    public function exportacao($extensao)
+    {
+        if (in_array($extensao, ['xlsx', 'csv', 'pdf'])) {
+            return Excel::download(new TarefasExport, 'tarefas.' . $extensao);
         }
-        $arquivo = 'tarefas.' . $extensao;
-        return Excel::download(new TarefasExport, $arquivo);
+        return redirect()->route('tarefa.index');
     }
 }
