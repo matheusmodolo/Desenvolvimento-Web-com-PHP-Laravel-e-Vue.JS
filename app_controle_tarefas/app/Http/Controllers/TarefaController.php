@@ -8,6 +8,7 @@ use App\Mail\NovaTarefaMail;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TarefasExport;
+use PDF;
 
 class TarefaController extends Controller
 {
@@ -124,7 +125,7 @@ class TarefaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Tarefa $tarefa)
-    { 
+    {
         $user_id = auth()->user()->id;
         if ($tarefa->user_id != $user_id) {
             return view('acesso-negado');
@@ -141,5 +142,11 @@ class TarefaController extends Controller
             return Excel::download(new TarefasExport, 'tarefas.' . $extensao);
         }
         return redirect()->route('tarefa.index');
+    }
+
+    public function exportar() {
+        $tarefas = auth()->user()->tarefas()->orderBy('data_limite', 'desc')->get();
+        $pdf = PDF::loadView('tarefa.pdf', ['tarefas' => $tarefas]);
+        return $pdf->download('tarefas.pdf');
     }
 }
