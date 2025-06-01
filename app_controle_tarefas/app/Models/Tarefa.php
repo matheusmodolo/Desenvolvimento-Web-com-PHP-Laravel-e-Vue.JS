@@ -14,4 +14,9 @@ class Tarefa extends Model
         'data_limite',
         'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -8,7 +8,8 @@
                     <div class="card-header d-flex align-items-center justify-content-between">
                         Tarefas
                         <div>
-                            <a href="{{ route('tarefa.exportacao') }}" class="btn btn-sm btn-secondary">XLSX</a>
+                            <a href="{{ route('tarefa.exportacao', ['extensao' => 'csv']) }}" class="btn btn-sm btn-secondary">CSV</a>
+                            <a href="{{ route('tarefa.exportacao', ['extensao' => 'xlsx']) }}" class="btn btn-sm btn-secondary">XLSX</a>
                             <a href="{{ route('tarefa.create') }}" class="btn btn-sm btn-primary">Adicionar</a>
                         </div>
                     </div>
