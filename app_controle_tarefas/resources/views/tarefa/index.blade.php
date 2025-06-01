@@ -11,7 +11,7 @@
                             <a href="{{ route('tarefa.exportacao', ['extensao' => 'csv']) }}" class="btn btn-sm btn-secondary">CSV</a>
                             <a href="{{ route('tarefa.exportacao', ['extensao' => 'xlsx']) }}" class="btn btn-sm btn-secondary">XLSX</a>
                             <a href="{{ route('tarefa.exportacao', ['extensao' => 'pdf']) }}" class="btn btn-sm btn-secondary">PDF</a>
-                            <a href="{{ route('tarefa.exportar') }}" class="btn btn-sm btn-secondary">PDF v2</a>
+                            <a href="{{ route('tarefa.exportar') }}" target="_blank" class="btn btn-sm btn-secondary">PDF v2</a>
                             <a href="{{ route('tarefa.exportar') }}" class="btn btn-sm btn-primary">Adicionar</a>
                         </div>
                     </div>

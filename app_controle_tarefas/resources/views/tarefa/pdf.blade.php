@@ -5,9 +5,8 @@
     <style>
         .titulo {
             text-align: center;
+            font-size: 1.5rem;
             padding: .7rem;
-            border: 1px solid #000;
-            background-color: #c2c2c2;
             width: 100%;
             text-transform: uppercase;
             font-weight: bold;
@@ -20,9 +19,7 @@
 
         table th {
             text-align: left;
-            padding: .5rem;
-            border: 1px solid #000;
-            background-color: #c2c2c2;
+            border-bottom: 1px solid #000;
         }
 
         /* .page-break {
