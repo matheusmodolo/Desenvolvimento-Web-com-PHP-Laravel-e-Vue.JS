@@ -124,7 +124,7 @@ class TarefaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Tarefa $tarefa)
-    {
+    { 
         $user_id = auth()->user()->id;
         if ($tarefa->user_id != $user_id) {
             return view('acesso-negado');
