@@ -26,7 +26,7 @@ class MarcaController extends Controller
     {
         // $marcas = Marca::all();
         $marcas = $this->marca->all();
-        return $marcas;
+        return response()->json($marcas, 200);
     }
 
     /**
@@ -38,8 +38,21 @@ class MarcaController extends Controller
     public function store(Request $request)
     {
         // $marca = Marca::create($request->all());
+        $regras = [
+            'nome' => 'required|unique:marcas|min:3|max:50',
+            'imagem' => 'required',
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute é obrigatório',
+            'nome.unique' => 'Já existe uma marca com esse nome',
+            'min' => 'O campo :attribute deve ter no mínimo :min caracteres',
+            'max' => 'O campo :attribute deve ter no máximo :max caracteres',
+        ];
+
+        $request->validate($regras, $feedback);
         $marca = $this->marca->create($request->all());
-        return $marca;
+        return response()->json($marca, 201);
     }
 
     // /**
@@ -60,8 +73,11 @@ class MarcaController extends Controller
      */
     public function show($id)
     {
-        $marca = $this->marca->findOrFail($id);
-        return $marca;
+        $marca = $this->marca->find($id);
+        if (!$marca) {
+            return response()->json(['erro' => 'Marca não encontrada!'], 404);
+        }
+        return response()->json($marca, 200);
     }
 
     // /**
@@ -85,9 +101,12 @@ class MarcaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $marca = $this->marca->findOrFail($id);
+        $marca = $this->marca->find($id);
+        if (!$marca) {
+            return response()->json(['erro' => 'Marca não encontrada!'], 404);
+        }
         $marca->update($request->all());
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     // /**
@@ -110,7 +129,10 @@ class MarcaController extends Controller
     public function destroy($id)
     {
         $marca = $this->marca->findOrFail($id);
+        if (!$marca) {
+            return response()->json(['erro' => 'Marca não encontrada!'], 404);
+        }
         $marca->delete();
-        return ['msg' => 'Marca deletada com sucesso!'];
+        return response()->json(['msg' => 'Marca deletada com sucesso!'], 200);
     }
 }
