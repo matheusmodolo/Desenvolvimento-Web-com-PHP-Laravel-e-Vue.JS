@@ -49,7 +49,7 @@ class MarcaController extends Controller
             'nome' => $request->nome,
             'imagem' => $imagem_urn
         ]);
-        
+
         return response()->json($marca, 201);
     }
 
@@ -133,10 +133,14 @@ class MarcaController extends Controller
         // $marca = Marca::create($request->all());
         $request->validate($this->marca->rules(), $this->marca->feedback());
 
-        $marca->update([
-            'nome' => $request->nome,
-            'imagem' => $imagem_urn
-        ]);
+        $marca->fill($request->all());
+        $marca->imagem = $imagem_urn;
+        $marca->save();
+
+        // $marca->update([
+        //     'nome' => $request->nome,
+        //     'imagem' => $imagem_urn
+        // ]);
 
         return response()->json($marca, 200);
     }
