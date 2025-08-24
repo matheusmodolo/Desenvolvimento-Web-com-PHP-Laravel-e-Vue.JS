@@ -19,6 +19,11 @@ class Modelo extends Model
         'abs'
     ];
 
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class);
+    }
+
     public function rules()
     {
         return [

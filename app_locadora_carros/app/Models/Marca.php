@@ -11,6 +11,11 @@ class Marca extends Model
 
     protected $fillable = ['nome', 'imagem'];
 
+    public function modelos()
+    {
+        return $this->hasMany(Modelo::class);
+    }
+
     public function rules()
     {
         return [
