@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MarcaController extends Controller
 {
@@ -37,7 +38,7 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $imagem = $request->file('imagem');
 
         $imagem_urn = $imagem->store('imagens/marcas', 'public');
@@ -97,12 +98,12 @@ class MarcaController extends Controller
     public function update(Request $request, $id)
     {
         $marca = $this->marca->find($id);
-        
+
         if (!$marca) {
             return response()->json(['erro' => 'Marca não encontrada!'], 404);
         }
 
-        if($request->method() === 'PATCH') {
+        if ($request->method() === 'PATCH') {
             $rules = [];
             foreach ($marca->rules() as $input => $rule) {
                 if (array_key_exists($input, $request->all())) {
@@ -114,7 +115,26 @@ class MarcaController extends Controller
             $request->validate($marca->rules(), $marca->feedback());
         }
 
-        $marca->update($request->all());
+        // Remove o arquivo antigo caso exista
+        if ($request->file('imagem')) {
+            if ($marca->imagem && Storage::disk('public')->exists($marca->imagem)) {
+                Storage::disk('public')->delete($marca->imagem);
+            }
+        }
+        // else {
+        //     return response()->json(['erro' => 'É necessário enviar uma imagem!'], 400);
+        // }
+
+        $imagem = $request->file('imagem');
+
+        $imagem_urn = $imagem->store('imagens/marcas', 'public');
+        // $marca = Marca::create($request->all());
+        $request->validate($this->marca->rules(), $this->marca->feedback());
+
+        $marca->update([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn
+        ]);
 
         return response()->json($marca, 200);
     }
@@ -139,9 +159,15 @@ class MarcaController extends Controller
     public function destroy($id)
     {
         $marca = $this->marca->findOrFail($id);
+
         if (!$marca) {
             return response()->json(['erro' => 'Marca não encontrada!'], 404);
         }
+
+        if ($marca->imagem) {
+            Storage::disk('public')->delete($marca->imagem);
+        }
+
         $marca->delete();
         return response()->json(['msg' => 'Marca deletada com sucesso!'], 200);
     }
